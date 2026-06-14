@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hemeyt Witch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,300;1,400;1,700&family=DM+Sans:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink:      #050507;
+  --deep:     #0c0b14;
+  --shadow:   #150d2a;
+  --cream:    #e8e0d0;
+  --muted:    #7a7082;
+  --gold:     #d4a843;
+  --gold-dim: #8a6428;
+  --line:     rgba(212,168,67,0.15);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--ink);
+  color: var(--cream);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── CUSTOM CURSOR ── */
+.cursor {
+  position: fixed;
+  width: 8px; height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.15s ease, opacity 0.15s;
+  mix-blend-mode: difference;
+}
+.cursor-ring {
+  position: fixed;
+  width: 32px; height: 32px;
+  border: 1px solid rgba(212,168,67,0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transition: transform 0.08s ease;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 500;
+  padding: 2rem 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  mix-blend-mode: normal;
+}
+
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--gold);
+  text-decoration: none;
+  letter-spacing: 0.08em;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--cream); }
+
+.nav-social-icons {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.nav-social-icons a {
+  color: var(--muted);
+  transition: color 0.3s;
+  display: flex;
+}
+.nav-social-icons a:hover { color: var(--gold); }
+.nav-social-icons svg { width: 16px; height: 16px; fill: currentColor; }
+
+/* ── HERO ── */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 4rem 5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 55% 65% at 70% 45%, rgba(21,13,42,0.9) 0%, transparent 65%),
+    radial-gradient(ellipse 30% 40% at 30% 60%, rgba(50,20,90,0.4) 0%, transparent 60%),
+    var(--ink);
+  z-index: 0;
+}
+
+.hero-orb {
+  position: absolute;
+  width: 420px; height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(80,30,140,0.25) 0%, transparent 70%);
+  top: 15%; right: 10%;
+  animation: breathe 6s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.08); opacity: 1; }
+}
+
+.hero-content { position: relative; z-index: 1; }
+
+.hero-pre {
+  font-size: 0.65rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.8rem;
+  opacity: 0.85;
+}
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-weight: 400;
+  line-height: 0.88;
+  letter-spacing: -0.02em;
+}
+
+.hero-title .line-big {
+  display: block;
+  font-size: clamp(5rem, 13vw, 12rem);
+  color: var(--cream);
+}
+
+.hero-title .line-italic {
+  display: block;
+  font-style: italic;
+  font-size: clamp(3.5rem, 9vw, 8.5rem);
+  color: var(--gold);
+  font-weight: 300;
+}
+
+.hero-middle {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-top: 3rem;
+  gap: 2rem;
+}
+
+.hero-tagline {
+  max-width: 380px;
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.9;
+  font-weight: 300;
+}
+
+.hero-tagline strong {
+  color: var(--cream);
+  font-weight: 400;
+}
+
+.hero-cta-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+.hero-scroll {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.scroll-line {
+  width: 40px; height: 1px;
+  background: var(--gold-dim);
+}
+
+/* ── BUTTONS ── */
+.btn {
+  display: inline-block;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 1rem 2.5rem;
+  border: 1px solid var(--gold);
+  color: var(--cream);
+  position: relative;
+  overflow: hidden;
+  transition: color 0.4s;
+  white-space: nowrap;
+}
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.76,0,0.24,1);
+  z-index: -1;
+}
+.btn:hover { color: var(--ink); }
+.btn:hover::before { transform: scaleX(1); }
+
+.btn-ghost {
+  display: inline-block;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.8rem 2rem;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  transition: color 0.3s, border-color 0.3s;
+}
+.btn-ghost:hover { color: var(--cream); border-color: rgba(212,168,67,0.4); }
+
+/* ── DIVIDER ── */
+.h-rule {
+  width: 100%;
+  height: 1px;
+  background: var(--line);
+}
+
+/* ── INTRO STRIP ── */
+#intro {
+  padding: 5rem 4rem;
+  display: grid;
+  grid-template-columns: 1fr 2px 1.6fr;
+  gap: 5rem;
+  align-items: center;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: var(--deep);
+}
+
+.intro-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+
+.intro-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 5rem;
+  font-weight: 400;
+  color: rgba(212,168,67,0.12);
+  line-height: 1;
+}
+
+.intro-divider { background: var(--line); }
+
+.intro-text {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.2rem, 2.2vw, 1.65rem);
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--cream);
+}
+
+.intro-text em {
+  font-style: normal;
+  color: var(--gold);
+}
+
+/* ── SERVICIOS ── */
+#servicios {
+  padding: 8rem 4rem;
+  background: var(--ink);
+}
+
+.s-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 5rem;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 2rem;
+}
+
+.s-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 400;
+  color: var(--cream);
+}
+
+.s-caption {
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  max-width: 260px;
+  text-align: right;
+  line-height: 1.8;
+}
+
+.servicio-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 1fr auto;
+  align-items: center;
+  gap: 3rem;
+  padding: 2.8rem 0;
+  border-bottom: 1px solid var(--line);
+  transition: background 0.3s;
+  cursor: none;
+}
+.servicio-row:hover { background: rgba(21,13,42,0.5); }
+
+.srv-num {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--gold-dim);
+  letter-spacing: 0.1em;
+}
+
+.srv-name {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.3rem, 2vw, 1.8rem);
+  font-weight: 400;
+  color: var(--cream);
+  transition: color 0.3s;
+}
+.servicio-row:hover .srv-name { color: var(--gold); }
+
+.srv-desc {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.8;
+  max-width: 320px;
+}
+
+/* ── PARA QUIÉN ── */
+#para-quien {
+  padding: 8rem 4rem;
+  background: var(--deep);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8rem;
+  align-items: center;
+}
+
+.pq-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 2rem;
+}
+
+.pq-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--cream);
+  margin-bottom: 3rem;
+}
+
+.pq-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.pq-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.pq-list li {
+  display: grid;
+  grid-template-columns: 1px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.pq-list li:last-child { border-bottom: none; }
+
+.pq-list li::before {
+  content: '';
+  width: 1px;
+  height: 100%;
+  background: var(--gold);
+  margin-top: 0.2rem;
+}
+
+.pq-list li span {
+  font-size: 0.88rem;
+  color: var(--cream);
+  line-height: 1.7;
+  opacity: 0.8;
+}
+
+.pq-cta-side {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.pq-quote {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--cream);
+  border-left: 1px solid var(--gold);
+  padding-left: 2rem;
+  opacity: 0.85;
+}
+
+/* ── VIDEOS ── */
+#videos {
+  padding: 8rem 4rem;
+  background: var(--ink);
+}
+
+.vid-header {
+  margin-bottom: 4rem;
+}
+
+.vid-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  font-weight: 400;
+  color: var(--cream);
+  margin-bottom: 0.8rem;
+}
+
+.vid-sub {
+  font-size: 0.78rem;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+}
+
+.vid-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: var(--line);
+}
+
+.vid-cell {
+  background: var(--deep);
+  display: flex;
+  flex-direction: column;
+}
+
+.vid-label {
+  padding: 1.5rem 2rem 0;
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+}
+
+.vid-embed {
+  padding: 1rem 2rem 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.vid-embed blockquote {
+  border: none !important;
+  background: transparent !important;
+  margin: 0 !important;
+}
+
+.tiktok-follow-row {
+  margin-top: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+}
+
+.tiktok-handle {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 1.4rem;
+  color: var(--muted);
+}
+.tiktok-handle span { color: var(--cream); }
+
+/* ── QUIÉN SOY ── */
+#quien {
+  padding: 8rem 4rem;
+  background: var(--deep);
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 8rem;
+  align-items: start;
+}
+
+.quien-text-col {}
+
+.quien-pre {
+  font-size: 0.6rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+}
+
+.quien-name {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 400;
+  line-height: 0.95;
+  color: var(--cream);
+  margin-bottom: 3rem;
+}
+
+.quien-name em {
+  display: block;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--gold);
+  font-size: 0.65em;
+}
+
+.quien-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.quien-body p {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.95;
+}
+
+.quien-body p strong {
+  color: var(--cream);
+  font-weight: 400;
+}
+
+.quien-stats {
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 1px solid var(--line);
+}
+
+.stat {
+  padding: 1.8rem 2rem;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.stat:nth-child(2n) { border-right: none; }
+.stat:nth-child(3), .stat:nth-child(4) { border-bottom: none; }
+
+.stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  font-weight: 400;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.quien-expertise {
+  margin-top: 3rem;
+}
+
+.expertise-title {
+  font-size: 0.6rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.2rem;
+}
+
+.expertise-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.exp-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.82rem;
+  color: var(--cream);
+  opacity: 0.75;
+}
+
+.exp-item::after {
+  content: '—';
+  color: var(--gold-dim);
+  font-size: 0.7rem;
+}
+
+/* ── MÉTODO ── */
+#metodo {
+  padding: 8rem 4rem;
+  background: var(--ink);
+}
+
+.metodo-inner {
+  max-width: 700px;
+}
+
+.met-pre {
+  font-size: 0.6rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 2rem;
+}
+
+.met-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--cream);
+  margin-bottom: 1rem;
+}
+
+.met-intro {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.9;
+  margin-bottom: 4rem;
+  max-width: 480px;
+}
+
+.met-steps {
+  display: flex;
+  flex-direction: column;
+}
+
+.met-step {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 2.5rem;
+  padding: 2.5rem 0;
+  border-bottom: 1px solid var(--line);
+  align-items: start;
+}
+
+.met-step:first-child { border-top: 1px solid var(--line); }
+
+.step-i {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 1.5rem;
+  color: rgba(212,168,67,0.2);
+  line-height: 1;
+  padding-top: 0.2rem;
+}
+
+.step-body h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: var(--cream);
+  margin-bottom: 0.5rem;
+}
+
+.step-body p {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+/* ── FINAL CTA ── */
+#final-cta {
+  padding: 10rem 4rem;
+  background: var(--shadow);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.final-orb {
+  position: absolute;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(80,30,140,0.2) 0%, transparent 65%);
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  pointer-events: none;
+}
+
+.final-pre {
+  font-size: 0.6rem;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: var(--gold);
+  position: relative;
+}
+
+.final-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 400;
+  line-height: 1.05;
+  color: var(--cream);
+  position: relative;
+}
+
+.final-title em {
+  display: block;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--gold);
+}
+
+.final-sub {
+  font-size: 0.85rem;
+  color: var(--muted);
+  max-width: 400px;
+  line-height: 1.9;
+  position: relative;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--ink);
+  border-top: 1px solid var(--line);
+  padding: 4rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.foot-logo {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 1.6rem;
+  font-weight: 300;
+  color: var(--gold);
+  margin-bottom: 0.8rem;
+}
+
+.foot-tagline {
+  font-size: 0.75rem;
+  color: var(--muted);
+  line-height: 1.8;
+  font-style: italic;
+}
+
+.foot-nav ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.foot-nav a {
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.foot-nav a:hover { color: var(--cream); }
+
+.foot-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.foot-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.foot-contact-item a {
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.foot-contact-item a:hover { color: var(--cream); }
+
+.foot-socials {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.foot-socials a {
+  width: 34px; height: 34px;
+  border: 1px solid var(--line);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--muted);
+  transition: border-color 0.3s, color 0.3s;
+}
+.foot-socials a:hover { border-color: var(--gold); color: var(--gold); }
+.foot-socials svg { width: 14px; height: 14px; fill: currentColor; }
+
+.foot-bottom {
+  grid-column: 1 / -1;
+  border-top: 1px solid var(--line);
+  padding-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.foot-legal {
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  color: rgba(122,112,130,0.4);
+}
+
+.foot-legal a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.foot-legal a:hover { color: var(--muted); }
+
+/* ── WA FLOAT ── */
+.wa-float {
+  position: fixed;
+  bottom: 2.5rem; right: 2.5rem;
+  z-index: 400;
+  width: 48px; height: 48px;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 24px rgba(37,211,102,0.3);
+  transition: transform 0.3s;
+  text-decoration: none;
+}
+.wa-float:hover { transform: scale(1.1); }
+.wa-float svg { width: 22px; height: 22px; fill: white; }
+
+/* ── REVEAL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.up { transform: translateY(0); opacity: 1; }
+
+/* ── MOBILE ── */
+@media (max-width: 900px) {
+  nav { padding: 1.5rem 1.5rem; }
+  .nav-links { display: none; }
+  #hero { padding: 0 1.5rem 4rem; }
+  #intro { grid-template-columns: 1fr; gap: 2rem; padding: 4rem 1.5rem; }
+  .intro-divider { display: none; }
+  #servicios { padding: 5rem 1.5rem; }
+  .s-header { flex-direction: column; gap: 1rem; }
+  .s-caption { text-align: left; max-width: 100%; }
+  .servicio-row { grid-template-columns: 50px 1fr; gap: 1.5rem; }
+  .srv-desc, .servicio-row .btn-ghost { display: none; }
+  #para-quien { grid-template-columns: 1fr; gap: 4rem; padding: 5rem 1.5rem; }
+  #videos { padding: 5rem 1.5rem; }
+  .vid-grid { grid-template-columns: 1fr; }
+  #quien { grid-template-columns: 1fr; gap: 4rem; padding: 5rem 1.5rem; }
+  #metodo { padding: 5rem 1.5rem; }
+  #final-cta { padding: 6rem 1.5rem; }
+  footer { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
+  .foot-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+  .hero-middle { flex-direction: column; align-items: flex-start; }
+  .hero-cta-group { align-items: flex-start; }
+  .tiktok-follow-row { flex-direction: column; gap: 1.5rem; align-items: flex-start; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .hero-orb, .final-orb { animation: none; }
+  .cursor, .cursor-ring { display: none; }
+  body { cursor: auto; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="ring"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Hemeyt Witch</a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#quien">Quién soy</a></li>
+      <li><a href="#videos">TikTok</a></li>
+    </ul>
+    <div class="nav-social-icons">
+      <a href="https://www.instagram.com/helenmendozawitch" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      </a>
+      <a href="https://www.tiktok.com/@helenmendozawitch" target="_blank" rel="noopener" aria-label="TikTok">
+        <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.77a4.85 4.85 0 0 1-1.01-.08z"/></svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-orb"></div>
+  <div class="hero-content">
+    <p class="hero-pre reveal">El Aquelarre · Brujería real</p>
+    <h1 class="hero-title">
+      <span class="line-big reveal">No te vendo</span>
+      <span class="line-italic reveal">magia.</span>
+      <span class="line-big reveal">Te enseño</span>
+      <span class="line-italic reveal">a usarla.</span>
+    </h1>
+    <div class="hero-middle">
+      <p class="hero-tagline reveal">
+        <strong>Si estás aquí, no es casualidad.</strong><br>
+        Es porque tu energía ya te trajo hasta aquí.<br>
+        Descubre qué te está bloqueando. Limpia. Manifiesta.
+      </p>
+      <div class="hero-cta-group reveal">
+        <a href="https://forms.gle/xi3vHKkTYkbiKQJW6" target="_blank" class="btn">Entrar al Aquelarre</a>
+        <div class="hero-scroll">
+          <span class="scroll-line"></span>
+          Descubrir más
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTRO STRIP -->
+<div id="intro" class="reveal">
+  <div>
+    <p class="intro-label">Formación</p>
+    <div class="intro-number">8+</div>
+    <p style="font-size:0.72rem;color:var(--muted);margin-top:0.5rem;letter-spacing:0.1em;">años de práctica real</p>
+  </div>
+  <div class="intro-divider"></div>
+  <p class="intro-text">
+    "No hago rituales al azar ni soluciones genéricas.<br>
+    Trabajo desde la <em>experiencia, la práctica</em> y el conocimiento real.<br>
+    Esto no es magia rápida. Es trabajo real con resultados reales."
+  </p>
+</div>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div class="s-header reveal">
+    <h2 class="s-title">Servicios</h2>
+    <p class="s-caption">Cada proceso es personalizado según tu energía y lo que realmente necesitas trabajar.</p>
+  </div>
+
+  <div class="reveal">
+    <div class="servicio-row">
+      <span class="srv-num">I</span>
+      <span class="srv-name">Lectura de Tarot</span>
+      <p class="srv-desc">Descubre lo que no estás viendo. Respuestas claras, sin rodeos ni fantasía.</p>
+      <a href="https://wa.me/5215584519926?text=Hola%20vengo%20de%20tu%20p%C3%A1gina%20%F0%9F%94%AE%20y%20quiero%20una%20lectura%20de%20tarot" target="_blank" class="btn-ghost">Quiero mi lectura</a>
+    </div>
+    <div class="servicio-row">
+      <span class="srv-num">II</span>
+      <span class="srv-name">Limpias Energéticas</span>
+      <p class="srv-desc">Te quito lo que te está drenando. Bloqueos, cargas y energía ajena… fuera.</p>
+      <a href="https://wa.me/5215584519926?text=Hola%20vengo%20de%20tu%20p%C3%A1gina%20%F0%9F%95%AF%EF%B8%8F%20siento%20que%20tengo%20bloqueos%20energ%C3%A9ticos%20y%20quiero%20una%20limpia" target="_blank" class="btn-ghost">Necesito una limpia</a>
+    </div>
+    <div class="servicio-row">
+      <span class="srv-num">III</span>
+      <span class="srv-name">Abundancia Sin Mamadas</span>
+      <p class="srv-desc">El dinero no fluye por casualidad. Identifica y rompe lo que te está frenando.</p>
+      <a href="https://wa.me/5215584519926?text=Hola%20vengo%20de%20tu%20p%C3%A1gina%20%F0%9F%92%B8%20y%20quiero%20trabajar%20mis%20bloqueos%20econ%C3%B3micos" target="_blank" class="btn-ghost">Quiero desbloquearme</a>
+    </div>
+    <div class="servicio-row">
+      <span class="srv-num">IV</span>
+      <span class="srv-name">Autoendulzamiento</span>
+      <p class="srv-desc">No es para manipular… es para alinearte. Trabaja tu energía y atrae desde ti.</p>
+      <a href="https://wa.me/5215584519926?text=Hola%20vengo%20de%20tu%20p%C3%A1gina%20%F0%9F%8D%AF%20y%20quiero%20empezar%20un%20proceso%20de%20autoendulzamiento" target="_blank" class="btn-ghost">Quiero empezar</a>
+    </div>
+  </div>
+</section>
+
+<!-- PARA QUIÉN -->
+<section id="para-quien">
+  <div class="reveal">
+    <p class="pq-label">¿Esto es para ti?</p>
+    <h2 class="pq-title">Si te identificas<br>con esto… <em>ya sabes<br>por qué estás aquí.</em></h2>
+    <ul class="pq-list">
+      <li><span>Sientes que algo no fluye y no sabes por qué</span></li>
+      <li><span>Has intentado mil cosas y nada cambia</span></li>
+      <li><span>Te estás drenando emocional o energéticamente</span></li>
+      <li><span>Quieres respuestas reales, no cuentos</span></li>
+    </ul>
+  </div>
+  <div class="pq-cta-side reveal">
+    <blockquote class="pq-quote">
+      "Aquí no vienes a que alguien te arregle la vida. Vienes a entender, limpiar y tomar control de tu proceso."
+    </blockquote>
+    <div style="display:flex;flex-direction:column;gap:1rem;align-items:flex-start;">
+      <a href="https://forms.gle/mrE6aMnqX9FbXaMD9" target="_blank" class="btn">Entrar al Aquelarre</a>
+      <p style="font-size:0.72rem;color:var(--muted);letter-spacing:0.1em;">Si decides trabajar conmigo, no es al azar.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEOS TIKTOK -->
+<section id="videos">
+  <div class="vid-header reveal">
+    <h2 class="vid-title">Ve cómo trabajo</h2>
+    <p class="vid-sub">Contenido real · Sin filtros · @helenmendozawitch</p>
+  </div>
+  <div class="vid-grid reveal">
+    <div class="vid-cell">
+      <p class="vid-label">Video 01</p>
+      <div class="vid-embed">
+        <blockquote class="tiktok-embed"
+          cite="https://www.tiktok.com/@helenmendozawitch/video/7503714680419011848"
+          data-video-id="7503714680419011848"
+          style="max-width:325px;min-width:325px;">
+          <section><a target="_blank" href="https://www.tiktok.com/@helenmendozawitch/video/7503714680419011848">@helenmendozawitch</a></section>
+        </blockquote>
+      </div>
+    </div>
+    <div class="vid-cell">
+      <p class="vid-label">Video 02</p>
+      <div class="vid-embed">
+        <blockquote class="tiktok-embed"
+          cite="https://www.tiktok.com/@helenmendozawitch/video/7649266335712627986"
+          data-video-id="7649266335712627986"
+          style="max-width:325px;min-width:325px;">
+          <section><a target="_blank" href="https://www.tiktok.com/@helenmendozawitch/video/7649266335712627986">@helenmendozawitch</a></section>
+        </blockquote>
+      </div>
+    </div>
+  </div>
+  <div class="tiktok-follow-row reveal">
+    <p class="tiktok-handle">@<span>helenmendozawitch</span></p>
+    <a href="https://www.tiktok.com/@helenmendozawitch" target="_blank" class="btn">Seguir en TikTok</a>
+  </div>
+</section>
+
+<!-- QUIÉN SOY -->
+<section id="quien">
+  <div class="quien-text-col reveal">
+    <p class="quien-pre">Quién soy</p>
+    <h2 class="quien-name">
+      Helen<br>Mendoza
+      <em>Hemeyt Witch</em>
+    </h2>
+    <div class="quien-body">
+      <p>Llevo <strong>5 años trabajando directamente con personas</strong> y más de <strong>8 años formándome</strong> dentro de distintos caminos espirituales.</p>
+      <p>Mi enfoque no es improvisado ni genérico. Trabajo desde la experiencia, la práctica y el conocimiento real. Aquí no hay soluciones de catálogo.</p>
+      <p>No estoy aquí para venderte ilusiones. Estoy aquí para ayudarte a ver lo que no estás viendo y trabajar lo que realmente te está bloqueando.</p>
+    </div>
+    <div class="quien-stats">
+      <div class="stat">
+        <div class="stat-num">5</div>
+        <div class="stat-label">Años trabajando con personas</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">8+</div>
+        <div class="stat-label">Años de formación activa</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">4</div>
+        <div class="stat-label">Servicios especializados</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">MX</div>
+        <div class="stat-label">Brujería tradicional mexicana</div>
+      </div>
+    </div>
+  </div>
+  <div class="reveal">
+    <div class="quien-expertise">
+      <p class="expertise-title">Caminos de práctica</p>
+      <div class="expertise-list">
+        <div class="exp-item">Brujería Tradicional Mexicana</div>
+        <div class="exp-item">Tarot</div>
+        <div class="exp-item">Herbolaria</div>
+        <div class="exp-item">Chamanismo</div>
+        <div class="exp-item">Velomancia</div>
+        <div class="exp-item">Remedios Naturales</div>
+        <div class="exp-item">Brujería Ecléctica</div>
+      </div>
+    </div>
+    <div style="margin-top:3rem;display:flex;gap:1rem;flex-wrap:wrap;">
+      <a href="https://wa.me/5215584519926" target="_blank" class="btn">Hablar con Helen</a>
+      <a href="https://www.instagram.com/helenmendozawitch" target="_blank" class="btn-ghost">Instagram</a>
+    </div>
+  </div>
+</section>
+
+<!-- MÉTODO -->
+<section id="metodo">
+  <div class="metodo-inner">
+    <p class="met-pre reveal">Cómo trabajo contigo</p>
+    <h2 class="met-title reveal">Sin rituales al azar.<br>Sin soluciones genéricas.</h2>
+    <p class="met-intro reveal">Cada proceso se diseña según tu energía, tu situación y lo que realmente necesitas trabajar.</p>
+    <div class="met-steps">
+      <div class="met-step reveal">
+        <span class="step-i">I</span>
+        <div class="step-body">
+          <h4>Diagnóstico claro de tu situación</h4>
+          <p>Entendemos exactamente qué está pasando antes de hacer cualquier cosa.</p>
+        </div>
+      </div>
+      <div class="met-step reveal">
+        <span class="step-i">II</span>
+        <div class="step-body">
+          <h4>Trabajo energético enfocado</h4>
+          <p>Cada acción tiene un propósito específico para tu caso. Sin improvisación.</p>
+        </div>
+      </div>
+      <div class="met-step reveal">
+        <span class="step-i">III</span>
+        <div class="step-body">
+          <h4>Acompañamiento durante el proceso</h4>
+          <p>No desaparezco después de la sesión. El proceso tiene seguimiento real.</p>
+        </div>
+      </div>
+      <div class="met-step reveal">
+        <span class="step-i">IV</span>
+        <div class="step-body">
+          <h4>Herramientas reales para tu día a día</h4>
+          <p>Te vas con algo concreto que puedes aplicar. Esto es trabajo real con resultados reales.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section id="final-cta">
+  <div class="final-orb"></div>
+  <p class="final-pre reveal">El primer paso</p>
+  <h2 class="final-title reveal">Nada cambia…<br><em>hasta que lo trabajas.</em></h2>
+  <p class="final-sub reveal">Si estás aquí, tu energía ya te trajo. La pregunta es: ¿estás lista/o para hacerlo en serio?</p>
+  <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;" class="reveal">
+    <a href="https://forms.gle/xi3vHKkTYkbiKQJW6" target="_blank" class="btn">Entrar al Aquelarre 🔮</a>
+    <a href="https://wa.me/5215584519926" target="_blank" class="btn-ghost">Escribir por WhatsApp</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="foot-logo">Hemeyt Witch</div>
+    <p class="foot-tagline">No te vendo magia.<br>Te enseño a usarla.</p>
+    <div class="foot-socials">
+      <a href="https://www.instagram.com/helenmendozawitch" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      </a>
+      <a href="https://www.tiktok.com/@helenmendozawitch" target="_blank" rel="noopener" aria-label="TikTok">
+        <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.77a4.85 4.85 0 0 1-1.01-.08z"/></svg>
+      </a>
+      <a href="https://wa.me/5215584519926" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+      </a>
+    </div>
+  </div>
+  <nav class="foot-nav">
+    <ul>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#para-quien">¿Para quién?</a></li>
+      <li><a href="#videos">TikTok</a></li>
+      <li><a href="#quien">Quién soy</a></li>
+      <li><a href="#metodo">Método</a></li>
+      <li><a href="#final-cta">Contacto</a></li>
+    </ul>
+  </nav>
+  <div class="foot-contact">
+    <div class="foot-contact-item">
+      <svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:var(--muted);flex-shrink:0;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+      <a href="tel:5215584519926">55 8451 9926</a>
+    </div>
+    <div class="foot-contact-item">
+      <svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:var(--muted);flex-shrink:0;"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+      <a href="mailto:ventas@hemeytw.com">ventas@hemeytw.com</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span class="foot-legal">© 2026 HEMEYT Witch · Todos los derechos reservados</span>
+    <a href="https://www.helenmendozawitch.com/privacy" class="foot-legal">Aviso de Privacidad</a>
+  </div>
+</footer>
+
+<!-- WA FLOAT -->
+<a href="https://wa.me/5215584519926" class="wa-float" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+</a>
+
+<script async src="https://www.tiktok.com/embed.js"></script>
+
+<script>
+// CURSOR
+(function(){
+  const cur = document.getElementById('cur');
+  const ring = document.getElementById('ring');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove', e=>{
+    mx=e.clientX; my=e.clientY;
+    cur.style.left=(mx-4)+'px'; cur.style.top=(my-4)+'px';
+  });
+  function animRing(){
+    rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12;
+    ring.style.left=(rx-16)+'px'; ring.style.top=(ry-16)+'px';
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+  document.querySelectorAll('a,button').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{ cur.style.transform='scale(2.5)'; ring.style.transform='scale(1.5)'; });
+    el.addEventListener('mouseleave',()=>{ cur.style.transform='scale(1)'; ring.style.transform='scale(1)'; });
+  });
+})();
+
+// SCROLL REVEAL
+(function(){
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('up'); io.unobserve(e.target); }
+    });
+  },{threshold:0.1});
+  els.forEach(el=>io.observe(el));
+})();
+</script>
+</body>
+</html>
